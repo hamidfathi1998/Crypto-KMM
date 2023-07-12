@@ -1,23 +1,54 @@
 package ir.hfathi.cryptotest.di
 
+import ir.hfathi.cryptotest.data.remotedatasource.IMarketRemoteDataSource
+import ir.hfathi.cryptotest.domain.repository.IMarketRepository
+import ir.hfathi.cryptotest.network.client.ICryptoApiClient
+import ir.hfathi.cryptotest.ui.crypto_list.CryptoListViewModel
 import org.koin.core.context.startKoin
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
+import ir.hfathi.cryptotest.domain.usecase.GetCoinListUseCase
+import ir.hfathi.cryptotest.data.repository.MarketRepository
+import org.koin.dsl.bind
+import ir.hfathi.cryptotest.CryptoApi
+import ir.hfathi.cryptotest.network.client.CryptoApiClient
+import ir.hfathi.cryptotest.data.remotedatasource.MarketRemoteDataSource
 
-private val useCaseModule = module {}
+internal val useCaseModule = module {
+    singleOf(::GetCoinListUseCase)
+}
 
-private val repositoryModule = module {}
+internal val repositoryModule = module {
+    singleOf(::MarketRepository) bind IMarketRepository::class
+}
 
-private val apiModule = module {}
+internal val apiModule = module {
+    singleOf(::CryptoApi)
+    singleOf(::CryptoApiClient) bind ICryptoApiClient::class
+}
 
-private val utilityModule = module {}
+internal val remoteDataSourceModule = module {
+    singleOf(::MarketRemoteDataSource) bind IMarketRemoteDataSource::class
+}
 
-private val sharedModules =
-    listOf(useCaseModule, repositoryModule, apiModule, utilityModule)
+internal val viewModelModule = module {
+    factoryOf(::CryptoListViewModel)
+}
 
-fun initKoin(appDeclaration: KoinAppDeclaration) = startKoin {
-    modules(sharedModules)
+internal fun startDI(appDeclaration: KoinAppDeclaration) = startKoin {
+    modules(
+        useCaseModule +
+                remoteDataSourceModule +
+                repositoryModule +
+                apiModule +
+                viewModelModule
+    )
     appDeclaration()
 }
 
-fun initKoin() = initKoin { }
+fun startAppDI(appDeclaration: KoinAppDeclaration = {}) = startDI {
+        modules(viewModelModule)
+        appDeclaration()
+    }

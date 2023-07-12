@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Sergio Belda
+ * Copyright 2022 Sergio Belda
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package ir.hfathi.cryptotest.android.di
+package ir.hfathi.cryptotest.navigation
 
-import org.koin.androidx.viewmodel.dsl.viewModelOf
-import org.koin.dsl.module
-import ir.hfathi.cryptotest.android.MainViewModel
-
-internal val viewModelModule = module {
-    viewModelOf(::MainViewModel)
+interface Destination {
+    val route: String
 }
+
+data class TopLevelDestination(
+    override val route: String
+) : Destination

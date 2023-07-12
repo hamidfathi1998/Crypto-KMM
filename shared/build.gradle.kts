@@ -47,7 +47,15 @@ kotlin {
                 api(compose.components.resources)
 
                 implementation("io.insert-koin:koin-core:$koinVersion")
-                api("com.rickclephas.kmm:kmm-viewmodel-core:1.0.0-ALPHA-9")
+                // Please do remember to add compose.foundation and compose.animation
+                api(compose.foundation)
+                api(compose.animation)
+                //...
+                api("moe.tlaster:precompose:1.4.3")
+
+                // api("moe.tlaster:precompose-molecule:$precompose_version") // For Molecule intergration
+
+                 api("moe.tlaster:precompose-viewmodel:1.4.3") // For ViewModel intergration
 
                 //network
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
@@ -56,12 +64,10 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
+
                 //coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1") {
-                    version {
-                        strictly("1.7.1")
-                    }
-                }
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+
             }
         }
         val commonTest by getting {
@@ -73,6 +79,9 @@ kotlin {
             dependencies {
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.9.0")
+                implementation("io.insert-koin:koin-androidx-compose:3.4.2")
+                implementation("androidx.navigation:navigation-runtime-ktx:2.6.0")
+
             }
         }
         val iosX64Main by getting
@@ -94,3 +103,4 @@ android {
         minSdk = (findProperty("android.minSdk") as String).toInt()
     }
 }
+

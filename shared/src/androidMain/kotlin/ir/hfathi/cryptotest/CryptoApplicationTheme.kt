@@ -1,6 +1,5 @@
-package ir.hfathi.cryptotest.android
+package ir.hfathi.cryptotest
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Shapes
@@ -16,10 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MyApplicationTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+actual fun CryptoApplicationTheme(
+    darkTheme: Boolean ,
     content: @Composable () -> Unit
-) {
+){
     val colors = if (darkTheme) {
         darkColors(
             primary = Color(0xFFBB86FC),

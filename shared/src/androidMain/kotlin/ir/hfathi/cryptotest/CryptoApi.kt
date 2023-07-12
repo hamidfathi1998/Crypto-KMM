@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package ir.hfathi.cryptotest.android.di
+package ir.hfathi.cryptotest
 
-import org.koin.androidx.viewmodel.dsl.viewModelOf
-import org.koin.dsl.module
-import ir.hfathi.cryptotest.android.MainViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
-internal val viewModelModule = module {
-    viewModelOf(::MainViewModel)
-}
+actual val ApplicationDispatcher: CoroutineDispatcher = Dispatchers.IO
+
+
